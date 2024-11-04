@@ -52,6 +52,31 @@ def fetch_title():
         _title = soup.title.string if soup.title else 'No title found'
         sb(_title)
 
+def fetch_url():
+    url = _url.get()
+    config['links'] = []
+    _links.set(())  # initialised as an empty tuple
+    try:
+        page = requests.get(url)
+    except requests.RequestException as err:
+        sb(str(err))
+    else:
+        soup = BeautifulSoup(page.content, 'html.parser')
+        links = fetch_links(soup, url)
+        if links:
+            _links.set(tuple(lnk for lnk in links))
+            sb('Links found: {}'.format(len(links)))
+        else:
+            sb('No links found')
+        config['links'] = links
+
+
+def fetch_links(soup, base_url):
+    links = []
+    for link in soup.find_all('a', attrs={'href': re.compile("^https://")}):
+        links.append(base_url + link.get('href'))
+    return links
+
 def save():
     if not config.get('images'):
         alert('No images to save')
