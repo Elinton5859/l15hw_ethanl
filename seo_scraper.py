@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk,filedialog,messagebox
 import base64
 import json
+import re
 from pathlib import Path
 
 from bs4 import BeautifulSoup
