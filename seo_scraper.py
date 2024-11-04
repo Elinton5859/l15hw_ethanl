@@ -41,6 +41,17 @@ def fetch_images(soup, base_url):
     return images
 
 
+def fetch_title():
+    url = _url.get()
+    try:
+        page = requests.get(url)
+    except requests.RequestException as err:
+        sb(str(err))
+    else:
+        soup = BeautifulSoup(page.content, 'html.parser')
+        _title = soup.title.string if soup.title else 'No title found'
+        sb(_title)
+
 def save():
     if not config.get('images'):
         alert('No images to save')
