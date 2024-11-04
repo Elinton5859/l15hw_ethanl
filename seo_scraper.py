@@ -143,9 +143,17 @@ if __name__ == "__main__": # execute logic if run directly
     _url_entry.grid(row=0, column=0, sticky=(E, W, S, N), padx=5)
     # grid mgr places object at position
     _fetch_btn = ttk.Button(
-        _url_frame, text='Fetch info', command=fetch_url) # create button
+        _url_frame, text='Fetch img', command=fetch_img) # create button
     # fetch_url() is callback for button press
     _fetch_btn.grid(row=0, column=1, sticky=W, padx=5)
+    _fetch_btn = ttk.Button(
+        _url_frame, text='Fetch title', command=fetch_title)  # create button
+    # fetch_url() is callback for button press
+    _fetch_btn.grid(row=1, column=1, sticky=W, padx=5)
+    _fetch_btn = ttk.Button(
+        _url_frame, text='Fetch link', command=fetch_url)  # create button
+    # fetch_url() is callback for button press
+    _fetch_btn.grid(row=2, column=1, sticky=W, padx=5)
 
     # img_frame contains Lisbox and Radio Frame
     _img_frame = ttk.LabelFrame(
@@ -163,6 +171,19 @@ if __name__ == "__main__": # execute logic if run directly
     _scrollbar.grid(row=0, column=1, sticky=(S, N), pady=6)
     _img_listbox.configure(yscrollcommand=_scrollbar.set)
 
+    _link_frame = ttk.LabelFrame(
+        _mainframe, text='Content', padding='9 0 0 0')
+    _link_frame.grid(row=2, column=0, sticky=(N, S, E, W))
+
+    _links = StringVar()
+    _link_listbox = Listbox(
+        _link_frame, listvariable=_links, height=6, width=70)
+    _link_listbox.grid(row=0, column=0, sticky=(E, W), pady=5)
+    # Scrollbar can move vertical
+    _scrollbar = ttk.Scrollbar(
+        _link_frame, orient=VERTICAL, command=_link_listbox.yview)
+    _scrollbar.grid(row=0, column=1, sticky=(S, N), pady=6)
+    _link_listbox.configure(yscrollcommand=_scrollbar.set)
     #Listbox occupies (0,0) on _img_frame.
     # Scrollbar occupies (0,1) so _radio_frame goes to (0,2)
     _radio_frame = ttk.Frame(_img_frame)
@@ -190,7 +211,7 @@ if __name__ == "__main__": # execute logic if run directly
     # save command saves images to be listed in Listbox after parsing
     _scrape_btn = ttk.Button(
         _mainframe, text='Scrape!', command=save)
-    _scrape_btn.grid(row=2, column=0, sticky=E, pady=5)
+    _scrape_btn.grid(row=2, column=0, sticky=(E, N), pady=5)
 
     _status_frame = ttk.Frame(
         _root, relief='sunken', padding='2 2 2 2')
